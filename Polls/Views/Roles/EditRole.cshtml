@@ -1,0 +1,17 @@
+﻿@model Polls.Models.DtoModels.EditRoleDto
+@{
+    ViewBag.Title = "Редактирование роли";
+    Layout = "_AdminLayout";
+}
+<div class="container text-center">
+    <form asp-action="EditRole" asp-controller="Roles">
+        <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <div class="form-group">
+            <label asp-for="RoleName" class="control-label">Роль</label>
+            <input type="text" asp-for="RoleName" class="form-control w-50 m-auto" />
+        </div>
+        <div class="form-group text-center">
+            <input type="submit" value="Сохранить" class="btn btn-default" />
+        </div>
+    </form>
+</div>

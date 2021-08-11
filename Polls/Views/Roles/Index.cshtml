@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Polls.Models.DbModels.PollsRole>
+@{ Layout = "_AdminLayout";}
+
+<div class="text-center">
+        <a asp-action="Create" asp-controller="Roles" class="text-black-50">Добавить роль</a>
+        <div>
+            <h2 class="d-inline">Список ролей</h2>
+        </div>
+    <table class="table">
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>
+                    <form asp-action="EditRole" asp-controller="Roles" asp-route-id="@role.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            Изменить
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <form asp-action="Delete" asp-route-id="@role.Id" method="post">
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            Удалить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

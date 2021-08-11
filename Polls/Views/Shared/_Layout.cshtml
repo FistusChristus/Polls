@@ -1,0 +1,68 @@
+﻿@using Header.Models
+@{
+    var HeaderModel = new HeaderModel()
+    {
+        ProjectName = "AstinCo",
+        LanguageCodes = new string[] {"ru", "en"},
+        EcoSystemLink = "https://ecosystem.astinco.net/ecosystem",
+        LoginLink = "/account/login",
+        AccountLink = "#",
+        AdminLink = "/admin",
+        LogOutLink = "/account/logout",
+        SupportLink = "https://support.astinco.net",
+        // "none" if remove basket icon, "flex" if visible
+        IconStatus = "none",
+    };
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Polls</title>
+    <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderStyles.cshtml">
+            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+            <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    @*<partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_Header.cshtml">*@
+    <header>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <nav class="col-3 col-md-2 align-items-center">
+                @User.Identity.Name
+                <form method="post" asp-controller="account" asp-action="logout">
+
+                    <button type="submit" value="выход">logout</button>
+                </form>
+                @*<a asp-action="Logout" asp-controller="Account" class="btn btn-outline-dark btn-sm">Logout</a>*@
+            </nav>
+        }
+        else
+        {
+            <nav class="col-3 col-md-2">
+                <a class="btn btn-outline-dark btn-sm" asp-controller="Account" asp-action="Login">SIGN IN</a>
+                <a class="btn btn-outline-dark btn-sm" asp-controller="Account" asp-action="Register">SIGN UP</a>
+            </nav>
+        }
+    </header>
+    
+        <div class="container-fluid p-5 text-center">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2021 - Polls - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderScripts.cshtml" />
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @RenderSection("Scripts", required: false)
+</body>
+</html>
