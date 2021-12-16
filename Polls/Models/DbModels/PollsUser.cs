@@ -8,9 +8,8 @@ namespace Polls.Models.DbModels
 {
     public class PollsUser : IdentityUser<Guid>
     {
-        public string NickName { get; set; }
+        public string Login { get; set; }
         public ICollection<UserPoll> UserPolls { get; set; }
         public ICollection<UserAnswer> UserAnswers { get; set; }
-        public ICollection<PollsUser> PollsUsers { get; set; }
     }
 }

@@ -1,31 +1,20 @@
 ﻿@model Polls.Models.DtoModels.RegisterDto
-    <div class="text-center">
-        <h2>Регистрация нового пользователя</h2>
-        <form method="post" asp-controller="Account" asp-action="Register">
-            <input type="hidden" asp-for="Id" value="@Guid.NewGuid()" />
+    <div class="container w-25 text-center pt-4">
+        <form class="form-signin" method="post" asp-controller="Account" asp-action="Register">
             <div asp-validation-summary="ModelOnly"></div>
-            <div>
-                <label asp-for="Email"></label><br />
-                <input asp-for="Email" />
-                <span asp-validation-for="Email"></span>
-            </div>
-            <div>
-                <label asp-for="NickName"></label><br />
-                <input asp-for="NickName" />
-                <span asp-validation-for="NickName"></span>
-            </div>
-            <div>
-                <label asp-for="Password"></label><br />
-                <input asp-for="Password" />
-                <span asp-validation-for="Password"></span>
-            </div>
-            <div>
-                <label asp-for="PasswordConfirm"></label><br />
-                <input asp-for="PasswordConfirm" />
-                <span asp-validation-for="PasswordConfirm"></span>
-            </div>
-            <div class="p-2">
-                <input type="submit" value="Регистрация" />
-            </div>
+            <img class="mb-4" src="https://it.astin.co/Content/img/logo.svg" alt="" width="72" height="72">
+            <h1 class="h3 mb-3 font-weight-normal">Create new Account</h1>
+            <label for="inputLogin" asp-for="Email" class="sr-only">Login</label>
+            <input type="text" asp-for="Email" id="inputLogin" class="form-control mb-3" required="" autofocus="" placeholder="Email">
+            <label for="inputEmail" asp-for="Login" class="sr-only">Login</label>
+            <input type="text" asp-for="Login" id="inputLogin" class="form-control mb-3" required="" autofocus="" placeholder="Login">
+            <label for="inputPassword" asp-for="Password" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" asp-for="Password" class="form-control mb-3" placeholder="Password" required="">
+            <label for="ConfirmPassword" asp-for="PasswordConfirm" class="sr-only">Confirm Password</label>
+            <input type="text" asp-for="PasswordConfirm" id="ConfirmPassword" class="form-control mb-3" required="" autofocus="" placeholder="ConfirmPassword">
+            <button class="btn btn-lg btn-primary btn-block w-50 m-auto" type="submit">Sign up</button>
         </form>
+        <div class="text-black-50 mt-3 h5">OR</div>
+        <button class="text-right btn btn-outline-info" id="SignInBtn">Sign In</button>
+        <p class="mt-5 mb-3 text-muted">© 2010-@DateTime.Now.Year</p>
     </div>

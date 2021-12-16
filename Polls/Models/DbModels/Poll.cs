@@ -9,12 +9,15 @@ namespace Polls.Models.DbModels
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public string Question { get; set; }
 
-        public List<PollQuestion> PollQuestions { get; set; }
+        public ICollection<PollQuestion> PollQuestions { get; set; }
+
         public ICollection<UserPoll> UserPolls { get; set; }
-        public ICollection<UserAnswer> UserAnswers { get; set; }
-        public Guid UserId { get; set; }
-        public PollsUser PollsUser { get; set; }
+
+        public Guid? CreatorId { get; set; }
+        public PollsUser Creator { get; set; }
+
+        public Guid BackgroundId { get; set; }
+        public PollBackground Background { get; set; }
     }
 }

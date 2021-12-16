@@ -8,7 +8,7 @@ namespace Polls.Models.DtoModels
     public class EditUserDto
     {
             public Guid Id { get; set; }
-            public string NickName { get; set; }
+            public string Login { get; set; }
             public string Email { get; set; }
     }
 }

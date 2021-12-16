@@ -1,19 +1,7 @@
 ﻿
 @using Header.Models
 @{
-    var HeaderModel = new HeaderModel()
-    {
-        ProjectName = "AstinCo",
-        LanguageCodes = new string[] { "ru", "en" },
-        EcoSystemLink = "https://ecosystem.astinco.net/ecosystem",
-        LoginLink = "/account/login",
-        AccountLink = "#",
-        AdminLink = "/admin",
-        LogOutLink = "/account/logout",
-        SupportLink = "https://support.astinco.net",
-        // "none" if remove basket icon, "flex" if visible
-        IconStatus = "none",
-    };
+    
 }
 
 <!DOCTYPE html>
@@ -22,32 +10,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Polls</title>
-    <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderStyles.cshtml">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
         <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    @*<partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_Header.cshtml">*@
     <header>
         <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Polls</a>
+            <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">HOME</a>
             @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
+            <a asp-action="Index" asp-controller="Polls" class="text-light ml-auto">Polls</a>
             <a asp-action="Index" asp-controller="Roles" class="text-light ml-auto">Roles</a>
             <a asp-action="UserList" asp-controller="Roles" class="text-light ml-auto">Users</a>
             @{ if (User.Identity.IsAuthenticated)
                 {
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item text-nowrap">
-                                <span class="text-light">@User.Identity.Name</span>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav px-5">
-                            <li class="nav-item text-nowrap">
-                                <form method="post" asp-controller="account" asp-action="logout">
-                                    <button type="submit" class="btn-dark" value="выход">logout</button>
-                                </form>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item text-nowrap">
+                            <span class="text-light">@User.Identity.Name</span>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav px-5">
+                        <li class="nav-item text-nowrap">
+                            <form method="post" asp-controller="account" asp-action="logout">
+                                <button type="submit" class="btn-dark" value="выход">logout</button>
+                            </form>
+                        </li>
+                    </ul>
                 }
                 else
                 {
@@ -73,7 +60,6 @@
             &copy; 2021 - Polls - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderScripts.cshtml" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

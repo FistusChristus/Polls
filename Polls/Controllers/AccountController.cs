@@ -27,7 +27,7 @@ namespace Polls.Controllers
         {
             if (ModelState.IsValid)
             {
-                PollsUser user = new PollsUser { Email = model.Email, UserName = model.Email, NickName = model.NickName};
+                PollsUser user = new PollsUser { Email = model.Email, UserName = model.Login, Login = model.Login};
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -61,7 +61,7 @@ namespace Polls.Controllers
             if (ModelState.IsValid)
             {
                 var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                    await _signInManager.PasswordSignInAsync(model.Login, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению

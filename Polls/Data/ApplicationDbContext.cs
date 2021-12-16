@@ -17,6 +17,9 @@ namespace Polls.Data
         public DbSet<UserPoll> UserPolls { get; set; }
         public DbSet<PollQuestion> PollQuestions { get; set; }
         public DbSet<QuestionAnswer> QuestionAnswers { get; set; }
+        public DbSet<UserAnswer> UserAnswers { get; set; }
+        public DbSet<PollBackground> PollBackgrounds { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

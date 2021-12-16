@@ -126,23 +126,39 @@ namespace Polls.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("BackgroundId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PollsUserId")
+                    b.HasKey("Id");
+
+                    b.HasIndex("BackgroundId");
+
+                    b.HasIndex("CreatorId");
+
+                    b.ToTable("Polls");
+                });
+
+            modelBuilder.Entity("Polls.Models.DbModels.PollBackground", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Question")
+                    b.Property<string>("LinkPass")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PollsUserId");
-
-                    b.ToTable("Polls");
+                    b.ToTable("PollBackgrounds");
                 });
 
             modelBuilder.Entity("Polls.Models.DbModels.PollQuestion", b =>
@@ -154,7 +170,7 @@ namespace Polls.Migrations
                     b.Property<Guid>("PollId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("PollQuestionText")
+                    b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -234,7 +250,7 @@ namespace Polls.Migrations
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("NickName")
+                    b.Property<string>("Login")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -253,9 +269,6 @@ namespace Polls.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<Guid?>("PollsUserId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -277,8 +290,6 @@ namespace Polls.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("PollsUserId");
-
                     b.ToTable("AspNetUsers");
                 });
 
@@ -288,11 +299,14 @@ namespace Polls.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AnswerText")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("PollId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("PollQuestionId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -309,21 +323,14 @@ namespace Polls.Migrations
                     b.Property<Guid>("QuestionAnswerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PollId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("PollsUserId")
+                    b.Property<Guid>("PollId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "QuestionAnswerId");
 
-                    b.HasIndex("PollId");
-
-                    b.HasIndex("PollsUserId");
-
                     b.HasIndex("QuestionAnswerId");
 
-                    b.ToTable("UserAnswer");
+                    b.ToTable("UserAnswers");
                 });
 
             modelBuilder.Entity("Polls.Models.DbModels.UserPoll", b =>
@@ -334,12 +341,9 @@ namespace Polls.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("PollsUserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("PollId", "UserId");
 
-                    b.HasIndex("PollsUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserPolls");
                 });
@@ -397,9 +401,15 @@ namespace Polls.Migrations
 
             modelBuilder.Entity("Polls.Models.DbModels.Poll", b =>
                 {
-                    b.HasOne("Polls.Models.DbModels.PollsUser", "PollsUser")
+                    b.HasOne("Polls.Models.DbModels.PollBackground", "Background")
+                        .WithMany("Polls")
+                        .HasForeignKey("BackgroundId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Polls.Models.DbModels.PollsUser", "Creator")
                         .WithMany()
-                        .HasForeignKey("PollsUserId");
+                        .HasForeignKey("CreatorId");
                 });
 
             modelBuilder.Entity("Polls.Models.DbModels.PollQuestion", b =>
@@ -409,13 +419,6 @@ namespace Polls.Migrations
                         .HasForeignKey("PollId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Polls.Models.DbModels.PollsUser", b =>
-                {
-                    b.HasOne("Polls.Models.DbModels.PollsUser", null)
-                        .WithMany("PollsUsers")
-                        .HasForeignKey("PollsUserId");
                 });
 
             modelBuilder.Entity("Polls.Models.DbModels.QuestionAnswer", b =>
@@ -429,17 +432,15 @@ namespace Polls.Migrations
 
             modelBuilder.Entity("Polls.Models.DbModels.UserAnswer", b =>
                 {
-                    b.HasOne("Polls.Models.DbModels.Poll", null)
-                        .WithMany("UserAnswers")
-                        .HasForeignKey("PollId");
-
-                    b.HasOne("Polls.Models.DbModels.PollsUser", "PollsUser")
-                        .WithMany("UserAnswers")
-                        .HasForeignKey("PollsUserId");
-
                     b.HasOne("Polls.Models.DbModels.QuestionAnswer", "QuestionAnswer")
-                        .WithMany()
+                        .WithMany("UserAnswers")
                         .HasForeignKey("QuestionAnswerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Polls.Models.DbModels.PollsUser", "User")
+                        .WithMany("UserAnswers")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -452,9 +453,11 @@ namespace Polls.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Polls.Models.DbModels.PollsUser", "PollsUser")
+                    b.HasOne("Polls.Models.DbModels.PollsUser", "User")
                         .WithMany("UserPolls")
-                        .HasForeignKey("PollsUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,28 @@
+﻿@model Polls.Models.DtoModels.EditAnswerDto
+@{
+    ViewBag.Title = "Редактирование ответа";
+    Layout = "_AdminPollsLayout";
+}
+    <div class="container">
+        <form asp-action="edit" asp-controller="Answers">
+            <input type="hidden" asp-for="QuestionAnswer.Id" value="@Model.QuestionAnswer.Id" />
+            <div class="form-group">
+                <label asp-for="QuestionAnswer.Text" class="control-label">Ответ</label>
+                <input type="text" asp-for="QuestionAnswer.Text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="QuestionAnswer.PollQuestionId" class="control-label">Ответ к вопросу</label>
+                <select asp-for="QuestionAnswer.PollQuestionId">
+                    @foreach (var question in Model.PollQuestions)
+                    {
+                        <option value="@question.Id">
+                            @question.Text
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </form>
+    </div>

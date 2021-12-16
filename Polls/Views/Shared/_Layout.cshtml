@@ -1,19 +1,68 @@
 ﻿@using Header.Models
-@{
-    var HeaderModel = new HeaderModel()
+@using MantiCore;
+@using Header.Models
+@{ var HeaderModel = new HeaderModel()
     {
-        ProjectName = "AstinCo",
-        LanguageCodes = new string[] {"ru", "en"},
+        ProjectName = "Polls",
+        LanguageCodes = new string[]{ "en", "ru" },
         EcoSystemLink = "https://ecosystem.astinco.net/ecosystem",
         LoginLink = "/account/login",
         AccountLink = "#",
         AdminLink = "/admin",
         LogOutLink = "/account/logout",
+        ContactsLink = "/contacts",
         SupportLink = "https://support.astinco.net",
         // "none" if remove basket icon, "flex" if visible
         IconStatus = "none",
     };
-}
+    var StyleHeaderModels = new StyleHeaderModel()
+    {
+        EmailUserColor = "#BFBFBF",
+        SearchInputColor = "#000000",
+        ButtonsColor = "#6DB5FF",
+        ButtonsHoverColor = "#6DB5FF",
+        Hover = "#6DB5FF",
+        NotificationsColor = "#F80000",
+        TextAndIconsColor = "#000000",
+        DarkeningAndHeaderDividerColor = "rgba(0, 0, 0, 0.1)",
+        SearchPlaceholderColor = "rgba(0, 0, 0, .1)",
+        BackgroundColor = "#FFFFFF",
+        DropdownTriangleColor = "#EFFAFF",
+        BackgroundDropdownColor = "#EFFAFF",
+        DropdownBorderRadius = "10px",
+        DropdownDividersColor = "#6DB5FF",
+        DropdownProjectsHoverColor = " #D8F3FF",
+        DropdownProjectsScrollColor = "rgba(0, 0, 0, 0.2)",
+        DropdownProjectsScrollHeight = "100px",
+        TermOfUseColor = "#BFBFBF",
+        NotificationLinkColor = "#6DB5FF",
+        NotificationDateAndCrossColor = "#BFBFBF",
+        NotificationTextColor = "#6B6B6B",
+        NotificationUserColor = "#42B7E8",
+        NotificationProjectIconBorderColor = "rgba(109, 181, 255, 0.2)",
+        //<---Animation chat
+        SupportChatIconBoxShadowColor = "rgba(19, 15, 64, 0.4)",
+        SupportChatIconBoxShadowColorOpacity = "rgba(19, 15, 64, 0)",
+        SupportChatIconBoxShadowColorHover = "rgba(109, 181, 255, 0.4)",
+        SupportChatIconBoxShadowColorHoverOpacity = "rgba(109, 181, 255, 0)",
+        //Animation chat--->
+        SupportChatIconBackroundColor = "#130F40",
+        SupportChatIconBackroundColorHover = "#6DB5FF",
+        SupportChatIconColor = "#ffffff",
+        SupportChatIconColorHover = "#ffffff",
+        SupportChatBackgroundcolorHeaderFooter = "#130F40",
+        SupportChatColorHeaderFooter = "#FFFFFF",
+        SupportChatBackgroundcolorBody = "#F1F1F1",
+        SupportChatScrollBodyMargin = "54px 3px 0px 0px",
+        SupportChatBackgroundColorAstinMessage = "#6DB5FF",
+        SupportChatTextColorAstinMessage = "#000000",
+        SupportChatBackgroundColorUserMessage = "#ffffff",
+        SupportChatTextColorUserMessage = "#000000",
+        SupportChatDateColor = "#BFBFBF",
+        NotificationSendColor = "#6DB5FF",
+        NotificationSendHover = "rgba(109, 181, 255, 0.6)"
+    }; 
+ }
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,48 +70,46 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Polls</title>
-    <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderStyles.cshtml">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-            <link rel="stylesheet" href="~/css/site.css" />
+    <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderStyles.cshtml" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    @*<partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_Header.cshtml">*@
-    <header>
-        @if (User.Identity.IsAuthenticated)
-        {
-            <nav class="col-3 col-md-2 align-items-center">
-                @User.Identity.Name
-                <form method="post" asp-controller="account" asp-action="logout">
-
-                    <button type="submit" value="выход">logout</button>
-                </form>
-                @*<a asp-action="Logout" asp-controller="Account" class="btn btn-outline-dark btn-sm">Logout</a>*@
+    <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_Header.cshtml" />
+    @*<header class="w-100 fixed-top shadow-sm">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand d-flex align-items-center" asp-action="Polls" asp-controller="Polls"><img src="/img/ASTIN.svg" /></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                    </ul>
+                    <div class="ml-auto d-flex align-items-center">
+                        <a asp-controller="account" asp-action="registration" class="text-dark mr-4">Sign Up</a>
+                        <a asp-controller="account" asp-action="login" class="btn btn-outline-primary">Login</a>
+                    </div>
+                </div>
             </nav>
-        }
-        else
-        {
-            <nav class="col-3 col-md-2">
-                <a class="btn btn-outline-dark btn-sm" asp-controller="Account" asp-action="Login">SIGN IN</a>
-                <a class="btn btn-outline-dark btn-sm" asp-controller="Account" asp-action="Register">SIGN UP</a>
-            </nav>
-        }
-    </header>
-    
-        <div class="container-fluid p-5 text-center">
-            <main role="main">
-                @RenderBody()
-            </main>
-        </div>
-
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2021 - Polls - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </header>*@
+    <main role="main" class="main-content Sign">
+        @RenderBody()
+    </main>
+    <footer class="main-footer container-fluid bg-white border-top">
+        <div class="row h-100 align-items-center">
+            <div class="col-12 d-flex">
+                @{string date = DateTime.Now.ToString("yyyy");}
+                ASTIN 2010 - @date <span class="offset-9">Powered by <a class="powered-align" href="https://it.astin.co">ASTIN IT</a></span>
             </div>
-        </footer>
-        <partial model=@HeaderModel name="~/Areas/Header/Pages/Shared/_HeaderScripts.cshtml" />
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-        @RenderSection("Scripts", required: false)
+        </div>
+    </footer>
+    <partial model=@StyleHeaderModels name="~/Areas/Header/Pages/Shared/_HeaderScripts.cshtml" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -1,20 +1,63 @@
-﻿@{
+﻿@model Poll[]
+@{
     ViewData["Title"] = "Home Page";
 }
-<div class="row">
-    <div class="col">
-        <div class="filter_box d-flex ">
-            <div class="search_box d-flex align-items-center">
-                <input id="filter_search" type="text" name="serch" placeholder="Search..." />
-                <img id="proj_search" class="icon_search" src="/img/filter/Vector.svg" alt="filter" />
+
+<section class="main-landing-image">
+    <div class="bg-dark-transp">
+        <div class="w-100 h-100 d-flex align-items-center justify-content-center flex-column">
+            <h1 class="text-white display-3">Create your poll now</h1>
+            <button class="btn btn-outline-light mt-3 main-create-poll-btn" data-toggle="modal" data-target="#pollCreateModal">Create</button>
+            <div class="modal fade mt-5" id="pollCreateModal" tabindex="-1" role="dialog" aria-labelledby="pollCreateModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center w-100" id="exampleModalLabel">Poll creating</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="text" class="form-control w-50 m-auto" placeholder="Poll Title..." id="PollTitle" />
+                            <input type='text' class='form-control mt-3 mb-2 w-100 d-inline' placeholder='Add Your Question' id='PollQuestion1'>
+                            <button class="btn-info" onclick="add()">Add</button>
+                            <button class="btn-danger" onclick="remove()">remove</button>
+                            <div id="new_chq"></div>
+                            <input type="hidden" value="1" id="total_chq">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary">Create Poll</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-    <div class="row">
-        <div class="col">
-                <h1 class="display-4">Welcome</h1>
-        </div>
+</section>
+<section class="mt-5 mb-5 container text-center">
+    <h1 class="">Most popular polls</h1>
+    <div class="row pb-4">
+        @foreach (var poll in Model)
+        {
+            <div class="col-3">
+                <div class=" poll-card card h-100 border-0 shadow position-relative">
+                    <a asp-controller="polls" asp-action="poll" asp-route-id="@poll.Id" class="poll-card-link position-absolute w-100 h-100"></a>
+                    <div class="card-body position-relative text-left">
+                        <svg class="svg-inline--fa fa-thumbtack fa-w-12 poll-card-pin position-absolute" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="thumbtack" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M298.028 214.267L285.793 96H328c13.255 0 24-10.745 24-24V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v48c0 13.255 10.745 24 24 24h42.207L85.972 214.267C37.465 236.82 0 277.261 0 328c0 13.255 10.745 24 24 24h136v104.007c0 1.242.289 2.467.845 3.578l24 48c2.941 5.882 11.364 5.893 14.311 0l24-48a8.008 8.008 0 0 0 .845-3.578V352h136c13.255 0 24-10.745 24-24-.001-51.183-37.983-91.42-85.973-113.733z"></path></svg>
+                        <div class="card-title-wrapper">
+                            <h5 class="card-title"><a asp-controller="polls" asp-action="poll" asp-route-id="@poll.Id">@poll.Name</a></h5>
+                        </div>
+                        <ol>
+                            @foreach (var question in poll.PollQuestions)
+                            {
+                                <li class="card-subtitle mb-2 text-muted">@question.Text</li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-
+</section>
 

@@ -23,7 +23,7 @@ namespace Polls.Controllers
             _userManager = userManager;
         }
         public IActionResult Index() => View(_roleManager.Roles.ToList());
- 
+
         public IActionResult Create() => View();
         [HttpPost]
         public async Task<IActionResult> Create(RoleCreateDto roleCreateDto)
@@ -45,7 +45,7 @@ namespace Polls.Controllers
             }
             return View(roleCreateDto);
         }
-         
+
         [HttpPost]
         public async Task<IActionResult> Delete(string id)
         {
@@ -56,14 +56,14 @@ namespace Polls.Controllers
             }
             return RedirectToAction("Index");
         }
- 
+
         public IActionResult UserList() => View(_userManager.Users.ToList());
- 
+
         public async Task<IActionResult> Edit(string userId)
         {
             // получаем пользователя
             PollsUser pollsUser = await _userManager.FindByIdAsync(userId);
-            if(pollsUser!=null)
+            if (pollsUser != null)
             {
                 // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(pollsUser);
@@ -77,7 +77,7 @@ namespace Polls.Controllers
                 };
                 return View(model);
             }
- 
+
             return NotFound();
         }
         [HttpPost]
@@ -85,7 +85,7 @@ namespace Polls.Controllers
         {
             // получаем пользователя
             PollsUser pollsUser = await _userManager.FindByIdAsync(userId);
-            if(pollsUser!=null)
+            if (pollsUser != null)
             {
                 // получем список ролей пользователя
                 var userRoles = await _userManager.GetRolesAsync(pollsUser);
@@ -95,14 +95,14 @@ namespace Polls.Controllers
                 var addedRoles = roles.Except(userRoles);
                 // получаем роли, которые были удалены
                 var removedRoles = userRoles.Except(roles);
- 
+
                 await _userManager.AddToRolesAsync(pollsUser, addedRoles);
- 
+
                 await _userManager.RemoveFromRolesAsync(pollsUser, removedRoles);
- 
+
                 return RedirectToAction("UserList");
             }
- 
+
             return NotFound();
         }
 
@@ -113,7 +113,7 @@ namespace Polls.Controllers
             {
                 return NotFound();
             }
-            EditRoleDto model = new EditRoleDto { Id = role.Id, RoleName = role.Name};
+            EditRoleDto model = new EditRoleDto { Id = role.Id, RoleName = role.Name };
             return View(model);
         }
 

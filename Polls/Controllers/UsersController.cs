@@ -29,7 +29,7 @@ namespace Polls.Controllers
         {
             if (ModelState.IsValid)
             {
-                PollsUser user = new PollsUser {Id = model.Id, Email = model.Email, UserName = model.NickName};
+                PollsUser user = new PollsUser {Id = model.Id, Email = model.Email, UserName = model.Login};
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -53,7 +53,7 @@ namespace Polls.Controllers
             {
                 return NotFound();
             }
-            EditUserDto model = new EditUserDto { Id = user.Id, Email = user.Email, NickName = user.NickName,};
+            EditUserDto model = new EditUserDto { Id = user.Id, Email = user.Email, Login = user.Login,};
             return View(model);
         }
 
@@ -67,7 +67,7 @@ namespace Polls.Controllers
                 {
                     user.Email = model.Email;
                     user.UserName = model.Email;
-                    user.NickName = model.NickName;
+                    user.Login = model.Login;
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)

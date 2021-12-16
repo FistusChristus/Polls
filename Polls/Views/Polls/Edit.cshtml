@@ -1,16 +1,71 @@
-﻿@model Polls.Models.DbModels.Poll
+﻿@model Polls.Models.DtoModels.EditPollDto
 @{
-    ViewBag.Title = "Редактирование проекта";
+    ViewBag.Title = "Редактирование опроса";
+    Layout = "_AdminPollsLayout";
 }
-    <div class="container">
-        <form asp-action="edit" asp-controller="Projects">
-            <input type="hidden" asp-for="Id" value="@Model.Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Название</label>
-                <input type="text" asp-for="Name" class="form-control" />
-            </div>
-            <div class="form-group text-center">
-                <input type="submit" value="Сохранить" class="btn btn-default" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-7">
+            <form asp-action="edit" asp-controller="Polls">
+                <input type="hidden" asp-for="Poll.Id" value="@Model.Poll.Id" />
+                <div class="form-group">
+                    <label asp-for="Poll.Name" class="control-label">Название</label>
+                    <input type="text" asp-for="Poll.Name" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Poll.BackgroundId" class="control-label">Фоновая Тема</label>
+                    <select asp-for="Poll.BackgroundId">
+                        @foreach (var background in Model.Backgrounds)
+                        {
+                            <option value="@background.Id">
+                                @background.Name
+                            </option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group text-center">
+                    <input type="submit" value="Сохранить" class="btn btn-default btn-dark" />
+                </div>
+            </form>
+        </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <p>Проголосовавшие:</p>
+            @foreach (var name in Model.UserNames)
+            {
+                <p>@name, </p>
+            }
+        </div>
+    </div>
+    
+        
+    <div class="row w-75">
+        <h6>Questions</h6>
+    </div>
+    <div class="row w-100">
+        <div class="col-8">
+            <a class="text-right" asp-action="create" asp-controller="Questions">Add Question</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col" class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var question in Model.Poll.PollQuestions)
+                    {
+                        <tr>
+                            <td>@question.Text</td>
+                            <td class="text-right">
+                                <a asp-action="edit" asp-controller="questions" asp-route-id="@question.Id" class="btn btn-outline-primary">Edit</a>
+                                <a asp-action="delete" asp-controller="questions" asp-route-id="@question.Id" class="btn btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

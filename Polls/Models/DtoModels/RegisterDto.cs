@@ -11,8 +11,8 @@ namespace Polls.Models.DtoModels
         public Guid Id { get; set; }
 
         [Required]
-        [Display(Name = "NickName")]
-        public string NickName { get; set; }
+        [Display(Name = "Login")]
+        public string Login { get; set; }
 
         [Required]
         [Display(Name = "Email")]

@@ -1,0 +1,21 @@
+﻿@model Polls.Models.DbModels.PollBackground
+@{
+    ViewBag.Title = "Добавление фона опроса";
+    Layout = "_AdminPollsLayout";
+}
+    <div class="container">
+        <form asp-action="create" asp-controller="Backgrounds">
+            <input type="hidden" asp-for="Id" value="@Guid.NewGuid()" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Название фона</label>
+                <input type="text" asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LinkPass" class="control-label">Путь к фону</label>
+                <input type="text" asp-for="LinkPass" class="form-control" />
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Отправить" class="btn btn-default" />
+            </div>
+        </form>
+    </div>

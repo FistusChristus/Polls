@@ -8,8 +8,8 @@ namespace Polls.Models.DbModels
     public class PollQuestion
     {
         public Guid Id { get; set; }
-        public string PollQuestionText { get; set; }
-        public List<QuestionAnswer> Answers { get; set; }
+        public string Text { get; set; }
+        public ICollection<QuestionAnswer> Answers { get; set; }
 
         public Guid PollId { get; set; }
         public Poll Poll { get; set; }

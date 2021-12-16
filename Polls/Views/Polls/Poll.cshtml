@@ -1,0 +1,81 @@
+﻿@model Polls.Models.DtoModels.UserPollDto
+@{
+    ViewBag.Title = Model.Poll.Name;
+    var pollCompleted = Model.UserAnswerIds != null && Model.UserAnswerIds.Any();
+}
+@*<div class="container text-center h-100">
+    <div class="row">
+        <div class="col m-3">
+            <input type="hidden" class="poll-title" value="@Model.Poll.Id" />
+            <div class="display-4">@Model.Poll.Name</div>
+        </div>
+    </div>
+
+    @{
+        foreach (var question in Model.Poll.PollQuestions)
+        {
+            <input type="hidden" />
+            <div class="row">
+                <div class="col m-2">
+                    <div class="h5">@question.Text</div>
+                </div>
+            </div>
+            var disabled = pollCompleted ? "disabled" : "";
+            foreach (var answer in question.Answers)
+            {
+                string answerChecked = "";
+                if (Model.UserAnswerIds != null)
+                {
+                    answerChecked = Model.UserAnswerIds.Contains(answer.Id) ? "checked" : "";
+                }
+                <div class="row justify-content-center w-25">
+                    <div class="form-check">
+                        <input class="form-check-input answer-choose text-left" type="radio" name="@question.Text" id="@answer.Id" value="@answer.Id"
+                               @disabled @answerChecked /> 
+                        <label class="form-check-label text-left" for="@answer.Id">
+                            @answer.Text
+                            <span class="text-primary">@Model.answerVotes[answer.Id]</span>
+                        </label>
+                    </div>
+                </div>
+             }
+        }
+    }
+    <input type="submit" class="btn-info submit mt-3" />
+</div>*@
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-6">
+            <div class="card h-100 border-0 shadow position-relative">
+                <a class="position-absolute w-100 h-100"></a>
+                <div class="card-body position-relative text-left">
+                    <div class="">
+                        <h5 class="card-title text-center">@Model.Poll.Name</h5>
+                    </div>
+                        @foreach (var question in Model.Poll.PollQuestions)
+                        {
+
+                            <div class="card-subtitle mb-2 text-muted">@question.Text</div>
+                            var disabled = pollCompleted ? "disabled" : "";
+                                    @foreach (var answer in question.Answers)
+                                    {
+                                        string answerChecked = "";
+                                        if (Model.UserAnswerIds != null)
+                                        {
+                                            answerChecked = Model.UserAnswerIds.Contains(answer.Id) ? "checked" : "";
+                                        }
+                                        <div class="form-check m-2 pl-5">
+                                            <input class="form-check-input answer-choose text-left" type="radio" name="@question.Text" id="@answer.Id" value="@answer.Id"
+                                                   @disabled @answerChecked />
+                                            <label class="form-check-label text-left" for="@answer.Id">
+                                                @answer.Text
+                                                <span class="text-primary">@Model.answerVotes[answer.Id]</span>
+                                            </label>
+                                        </div>
+                                    }
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

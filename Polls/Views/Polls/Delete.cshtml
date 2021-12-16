@@ -1,6 +1,7 @@
 ﻿@model Polls.Models.DbModels.Poll
 @{
-    ViewBag.Title = "Удаление проекта";
+    ViewBag.Title = "Удаление опроса";
+    Layout = "_AdminPollsLayout";
 }
 
 <div class="container">
@@ -12,7 +13,7 @@
     </dl>
 
     <div>
-        <form asp-action="Delete" asp-controller="Projects" method="post">
+        <form asp-action="Delete" asp-controller="Polls" method="post">
             <div class="form-group text-center">
                 <input type="submit" class="btn btn-default" value="Удалить" />
             </div>

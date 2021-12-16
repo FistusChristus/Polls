@@ -10,6 +10,6 @@ namespace Polls.Models.DbModels
         public Guid PollId { get; set; }
         public Poll Poll { get; set; }
         public Guid UserId { get; set; }
-        public PollsUser PollsUser { get; set; }
+        public PollsUser User { get; set; }
     }
 }

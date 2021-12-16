@@ -1,0 +1,28 @@
+﻿@model Polls.Models.DtoModels.CreateQuestionDto
+@{
+    ViewBag.Title = "Добавление вопросов";
+    Layout = "_AdminPollsLayout";
+}
+    <div class="container">
+        <form asp-action="create" asp-controller="Questions" method="post">
+            <input type="hidden" asp-for="PollQuestion.Id" value="@Guid.NewGuid()" />
+            <div class="form-group">
+                <label asp-for="PollQuestion.Text" class="control-label">Название вопроса</label>
+                <input type="text" asp-for="PollQuestion.Text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="PollQuestion.PollId" class="control-label">Целевой опрос</label>
+                <select asp-for="PollQuestion.PollId">
+                    @foreach (var poll in Model.Polls)
+                    {
+                        <option value="@poll.Id">
+                            @poll.Name
+                        </option>
+                    }
+                </select>
+            </div>
+            <div class="form-group text-center">
+                <input type="submit" value="Отправить" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
